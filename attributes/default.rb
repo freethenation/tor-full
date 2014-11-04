@@ -1,10 +1,30 @@
 #######################################
+# General config section
+#######################################
+#The directory for keeping all the keys/etc
+default['tor']['DataDirectory'] = "/var/lib/tor"
+#The minimum log level to log. Possible values include debug, info, notice, warn, and err.
+default['tor']['MinLogLevel'] = "notice"
+#Where logs should be written. Valid values include a path to a file or "syslog"
+default['tor']['LogDestination'] = "/var/log/tor/log"
+#######################################
 # Socks config section
 #######################################
 #if true tor will open a socks proxy
 default['tor']['socks']['enabled'] = false
 #list of 'address:port' to open tor socks proxy on. A port of'0' means no socks proxy
-default['tor']['socks']['SocksPort'] = ['0.0.0.0:9050']
+default['tor']['socks']['SocksPorts'] = ['0.0.0.0:9050']
+#######################################
+# Hidden Services config section
+#######################################
+#Desc: hidden services tor should expose
+#Example:
+#default['tor']['hiddenServices'] = {
+# 'hidden_service_name':{
+#   'HiddenServiceDir' => '/var/lib/tor/hidden_service/',
+#   'HiddenServicePorts' => ['80 127.0.0.1:80'] #x y:z says to redirect requests on port x to the address y:z
+#}
+default['tor']['HiddenServices'] = {}
 #######################################
 # Relay config section
 #######################################
@@ -31,3 +51,10 @@ default['tor']['relay']['ExitPolicy'] = ['reject *:*']
 default['tor']['relay']['BridgeRelay'] = 0
 #Set to 0 to run a private bridge relay
 default['tor']['relay']['PublishServerDescriptor'] = 1
+#If true tor relay will server as a directory mirror
+default['tor']['relay']['Directory'] = false
+#"address:port" from which to mirror directory information
+default['tor']['relay']['DirPort'] = "9030"
+#If you run more than one tor node add keyids for other tor nodes
+#See https://www.torproject.org/docs/faq#MultipleRelays for more info
+default['tor']['relay']['MyFamily'] = []
