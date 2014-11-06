@@ -81,7 +81,7 @@ Make sure to read through the attributes section for relays above.
 
 Examples
 -----
-## Open local socks port
+### Open local socks port
 The example role below opens a Tor socks proxy on port 9050 available to localhost only
 ```ruby
 name "torproxy"
