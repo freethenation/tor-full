@@ -101,8 +101,9 @@ run_list("recipe[tor-full]")
 override_attributes(
   "tor" => {
     "hiddenServices" => {
-      hidden_web_service' => {
-       'HiddenServicePorts' => ['80 127.0.0.1:8080'] #requests on port 80 are redirected to localhost port 8080
+      "hidden_web_service" => {
+       "HiddenServicePorts" => ["80 127.0.0.1:8080"]
+       #requests on port 80 are redirected to localhost port 8080
       }
     }
   }
