@@ -127,7 +127,7 @@ for IRC (ports 6660 & 6667).
       "RelayBandwidthBurst":"1100",
       "ContactInfo":"ContactInfo 0x04FAC2E9CC21424A Richard Klafter <rpklafter@yahoo.com>",
       "Directory":true,
-      "ExitPolicy":["accept *:6660-6667","reject *:*""]
+      "ExitPolicy":["accept *:6660-6667","reject *:*"]
     }
   }
 }
