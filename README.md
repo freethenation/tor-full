@@ -94,14 +94,14 @@ override_attributes(
 ```
 
 ### Hidden service on port 80
-The example role below servers a website on port 80 as a hidden service. 
+The example role below serves a website on port 80 as a hidden service. 
 ```ruby
 name "torservice"
 run_list("recipe[tor-full]")
 override_attributes(
   "tor" => {
     "hiddenServices" => {
-      hidden_web_service':{
+      hidden_web_service' => {
        'HiddenServicePorts' => ['80 127.0.0.1:8080']
        #requests on port 80 are redirected to localhost port 8080
       }
@@ -109,8 +109,7 @@ override_attributes(
   }
 )
 ```
-Note: The `tor-full` recipe will write the hidden services hostname to the nodes
-config after node convergence to `node.tor.hiddenServices.HIDDEN_SERVICE_NAME.hostname`
+Note: The `tor-full` recipe will write the hidden service's hostname to the attribute `node.tor.hiddenServices.HIDDEN_SERVICE_NAME.hostname` after node convergence.
 
 ### Tor Relay
 The node config below sets up a Tor relay. The relay is a directory and an exit
@@ -134,5 +133,5 @@ for IRC (ports 6660 & 6667).
 }
 
 ```
-Note: you can makerecipe[tor-full::relay] `recipe[tor-full]` behave like `recipe[tor-full::relay]` by 
+Note: you can make `recipe[tor-full]` behave like `recipe[tor-full::relay]` by 
 setting the attribute `tor.relay.enabled = true`.
