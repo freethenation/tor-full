@@ -68,19 +68,71 @@ default['tor']['relay']['DirPort'] = "9030"
 default['tor']['relay']['MyFamily'] = []
 ```
 
-Usage
+Recipes
 -----
-#### tor::default
-TODO: Write usage instructions for each cookbook.
+#### tor-full::default
+Installs Tor and enables Tor service. By default it will not open a socks proxy, offer a hidden service,
+or act as a relay.
 
-e.g.
-Just include `tor` in your node's `run_list`:
 
+### tor-full::relay
+Installs Tor and configs Tor to be a relay. By default the relay will not be an exit or directory.
+Make sure to read through the attributes section for relays above.
+
+Examples
+-----
+## Open local socks port
+The example role below opens a Tor socks proxy on port 9050 available to localhost only
+```ruby
+name "torproxy"
+run_list("recipe[tor-full]")
+override_attributes(
+  "tor" => {
+    "SocksPorts" => ["127.0.0.1:9050"]
+  }
+)
+```
+
+### Hidden service on port 80
+The example role below servers a website on port 80 as a hidden service. 
+```ruby
+name "torservice"
+run_list("recipe[tor-full]")
+override_attributes(
+  "tor" => {
+    "hiddenServices" => {
+      hidden_web_service':{
+       'HiddenServicePorts' => ['80 127.0.0.1:8080']
+       #requests on port 80 are redirected to localhost port 8080
+      }
+    }
+  }
+)
+```
+Note: The `tor-full` recipe will write the hidden services hostname to the nodes
+config after node convergence to `node.tor.hiddenServices.HIDDEN_SERVICE_NAME.hostname`
+
+### Tor Relay
+The node config below sets up a Tor relay. The relay is a directory and an exit
+for IRC (ports 6660 & 6667).
 ```json
 {
-  "name":"my_node",
   "run_list": [
-    "recipe[tor]"
-  ]
+    "recipe[tor-full::relay]"
+  ],
+  "tor": { 
+    "relay": {
+      "Address":"tor.icyego.com",
+      "Nickname":"IcyEgo",
+      "RelayBandwidthRate":"1000",
+      "RelayBandwidthBurst":"1100",
+      "ContactInfo":"ContactInfo 0x04FAC2E9CC21424A Richard Klafter <rpklafter@yahoo.com>",
+      "Directory":true,
+      "ExitPolicy":["accept *:6660-6667","reject *:*""]
+    }
+  }
 }
+
 ```
+Note: you can makerecipe[tor-full::relay] `recipe[tor-full]` behave like `recipe[tor-full::relay]` by 
+setting the attribute `tor.relay.enabled = true`.
