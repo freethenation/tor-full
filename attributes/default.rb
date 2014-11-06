@@ -7,21 +7,17 @@ default['tor']['DataDirectory'] = "/var/lib/tor"
 default['tor']['MinLogLevel'] = "notice"
 #Where logs should be written. Valid values include a path to a file or "syslog"
 default['tor']['LogDestination'] = "/var/log/tor/log"
-#######################################
-# Socks config section
-#######################################
-#if true tor will open a socks proxy
-default['tor']['socks']['enabled'] = false
-#list of 'address:port' to open tor socks proxy on. A port of'0' means no socks proxy
-default['tor']['socks']['SocksPorts'] = ['0.0.0.0:9050']
+#List of 'address:port' to open tor socks proxy on. Defaults to disabled
+#Example: ['127.0.0.1:9050'] opens socks proxy on 9050 accessible to only the local machine
+default['tor']['SocksPorts'] = []
 #######################################
 # Hidden Services config section
 #######################################
 #Desc: hidden services tor should expose
 #Example:
 #default['tor']['hiddenServices'] = {
-# 'hidden_service_name':{
-#   'HiddenServiceDir' => '/var/lib/tor/hidden_service/',
+# 'HIDDEN_SERVICE_NAME':{
+#   'HiddenServiceDir' => '/var/lib/tor/some_service/', #default is /var/lib/tor/HIDDEN_SERVICE_NAME/
 #   'HiddenServicePorts' => ['80 127.0.0.1:80'] #x y:z says to redirect requests on port x to the address y:z
 #}
 default['tor']['HiddenServices'] = {}
@@ -42,7 +38,8 @@ default['tor']['relay']['Nickname'] = "IDidntEditTheConfig"
 default['tor']['relay']['RelayBandwidthRate'] = nil
 #Limit how much relayed traffic you will allow for bursts in kilobytes (not bits)
 default['tor']['relay']['RelayBandwidthBurst'] = nil
-#ContactInfo you can be reached at. exp "0xFFFFFFFF Random Person nobody AT example dot com"
+#ContactInfo you can be reached at
+#Example: "0xFFFFFFFF Random Person nobody AT example dot com"
 default['tor']['relay']['ContactInfo'] = nil
 #Sets the exit node policy for tor defaults to no exit
 #Exampe: ['accept *:6660-6667','reject *:*'] # allow irc ports but no more
@@ -56,5 +53,4 @@ default['tor']['relay']['Directory'] = false
 #"address:port" from which to mirror directory information
 default['tor']['relay']['DirPort'] = "9030"
 #If you run more than one tor node add keyids for other tor nodes
-#See https://www.torproject.org/docs/faq#MultipleRelays for more info
 default['tor']['relay']['MyFamily'] = []
