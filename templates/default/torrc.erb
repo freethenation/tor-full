@@ -175,7 +175,7 @@ ContactInfo <%= node.tor.relay.ContactInfo %>
 ## distribution for a sample.
 #DirPortFrontPage /etc/tor/tor-exit-notice.html
 <% if node.tor.relay.Directory %>
-DirPort <%= tor.relay.DirPort %>
+DirPort <%= node.tor.relay.DirPort %>
 <% end %>
 
 ## Uncomment this if you run more than one Tor relay, and add the identity
