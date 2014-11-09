@@ -83,6 +83,7 @@ Examples
 -----
 ### Open local socks port
 The example role below opens a Tor socks proxy on port 9050 available to localhost only
+
 ```ruby
 name "torproxy"
 run_list("recipe[tor-full]")
@@ -95,6 +96,7 @@ override_attributes(
 
 ### Hidden service on port 80
 The example role below serves a website on port 80 as a hidden service. 
+
 ```ruby
 name "torservice"
 run_list("recipe[tor-full]")
@@ -109,11 +111,13 @@ override_attributes(
   }
 )
 ```
+
 Note: The `tor-full` recipe will write the hidden service's hostname to the attribute `node.tor.hiddenServices.HIDDEN_SERVICE_NAME.hostname` after node convergence.
 
 ### Tor Relay
 The node config below sets up a Tor relay. The relay is a directory and an exit
 for IRC (ports 6660 & 6667).
+
 ```json
 {
   "run_list": [
@@ -133,5 +137,6 @@ for IRC (ports 6660 & 6667).
 }
 
 ```
+
 Note: you can make `recipe[tor-full]` behave like `recipe[tor-full::relay]` by 
 setting the attribute `tor.relay.enabled = true`.
