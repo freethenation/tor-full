@@ -70,7 +70,7 @@ default['tor']['relay']['MyFamily'] = []
 
 Recipes
 -----
-#### tor-full::default
+### tor-full::default
 Installs Tor and enables Tor service. By default it will not open a socks proxy, offer a hidden service,
 or act as a relay.
 
