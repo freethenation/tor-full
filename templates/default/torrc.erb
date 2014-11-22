@@ -173,7 +173,11 @@ ContactInfo <%= node.tor.relay.ContactInfo %>
 ## can explain what Tor is if anybody wonders why your IP address is
 ## contacting them. See contrib/tor-exit-notice.html in Tor's source
 ## distribution for a sample.
-#DirPortFrontPage /etc/tor/tor-exit-notice.html
+<% if node.tor.relay.DirPortFrontPage.is_a? String %>
+DirPortFrontPage <%= node.tor.relay.DirPortFrontPage %>
+<% else %>
+DirPortFrontPage /etc/tor/tor-exit-notice.html
+<% end %>
 <% if node.tor.relay.Directory %>
 DirPort <%= node.tor.relay.DirPort %>
 <% end %>

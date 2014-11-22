@@ -52,5 +52,8 @@ default['tor']['relay']['PublishServerDescriptor'] = 1
 default['tor']['relay']['Directory'] = false
 #"address:port" from which to mirror directory information
 default['tor']['relay']['DirPort'] = "9030"
+#If true a blob of html will be returned on your DirPort explaining Tor.
+#To send a custom HTML blob specify its full path, example "/etc/tor/tor-exit-notice.html"
+default['tor']['relay']['DirPortFrontPage'] = false
 #If you run more than one tor node add keyids for other tor nodes
 default['tor']['relay']['MyFamily'] = []
