@@ -25,6 +25,10 @@ template '/etc/tor/torrc' do
   end
 end
 
+template '/etc/tor/tor-exit-notice.html' do
+  source 'tor-exit-notice.html.erb'
+end
+
 service 'tor' do
   supports [:restart, :reload, :status]
   action [:enable, :start]
