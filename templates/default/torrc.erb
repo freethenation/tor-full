@@ -175,7 +175,7 @@ ContactInfo <%= node.tor.relay.ContactInfo %>
 ## distribution for a sample.
 <% if node.tor.relay.DirPortFrontPage.is_a? String %>
 DirPortFrontPage <%= node.tor.relay.DirPortFrontPage %>
-<% elseif node.tor.relay.DirPortFrontPage == true %>
+<% elseif !node.tor.relay.DirPortFrontPage.nil? %>
 DirPortFrontPage /etc/tor/tor-exit-notice.html
 <% end %>
 <% if node.tor.relay.Directory %>
