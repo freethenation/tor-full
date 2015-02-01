@@ -36,14 +36,14 @@ The following platform families are supported:
 ### Hidden Services config section
 
 * `node['tor']['HiddenServices']` - hidden services Tor should expose
-  ```ruby
-  	# Example
-  	# default['tor']['hiddenServices'] = {
-	# 'HIDDEN_SERVICE_NAME':{
-	#   'HiddenServiceDir' => '/var/lib/tor/some_service/', #default is /var/lib/tor/HIDDEN_SERVICE_NAME/
-	#   'HiddenServicePorts' => ['80 127.0.0.1:80'] #x y:z says to redirect requests on port x to the address y:z
-	# }
-  ```
+```ruby
+# Example
+default['tor']['hiddenServices'] = {
+  'HIDDEN_SERVICE_NAME':{
+  'HiddenServiceDir' => '/var/lib/tor/some_service/', #default is /var/lib/tor/HIDDEN_SERVICE_NAME/
+  'HiddenServicePorts' => ['80 127.0.0.1:80'] #x y:z says to redirect requests on port x to the address y:z
+}
+```
 
 ### Relay config section
 
@@ -55,15 +55,15 @@ The following platform families are supported:
 * `node['tor']['relay']['RelayBandwidthRate']` - Limit how much relayed traffic you will allow in kilobytes (not bits)
 * `node['tor']['relay']['RelayBandwidthBurst']` - Limit how much relayed traffic you will allow for bursts in kilobytes (not bits)
 * `node['tor']['relay']['ContactInfo']` - ContactInfo you can be reached at
-  * Example: "0xFFFFFFFF Random Person nobody AT example dot com"
+  * Example: `"0xFFFFFFFF Random Person nobody AT example dot com"`
 * `node['tor']['relay']['ExitPolicy']` - Sets the exit node policy for tor defaults to no exit
-  * Exampe: ['accept *:6660-6667','reject *:*'] # allow irc ports but no more
+  * Exampe: `['accept *:6660-6667','reject *:*'] # allow irc ports but no more`
 * `node['tor']['relay']['BridgeRelay']` - Set to 1 to run a bridge relay
 * `node['tor']['relay']['PublishServerDescriptor']` - Set to 0 to run a private bridge relay
 * `node['tor']['relay']['Directory']` - If true tor relay will server as a directory mirror
 * `node['tor']['relay']['DirPort']` - "address:port" from which to mirror directory information
 * `node['tor']['relay']['DirPortFrontPage']` - If true a blob of html will be returned on your DirPort explaining Tor.
-  * To send a custom HTML blob specify its full path, example "/etc/tor/tor-exit-notice.html"
+  * To send a custom HTML blob specify its full path, example `"/etc/tor/tor-exit-notice.html"`
 * `node['tor']['relay']['MyFamily']` - If you run more than one tor node add keyids for other tor nodes
 
 Recipes
