@@ -1,0 +1,22 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_zero
+
+platforms:
+  - name: centos-6.5
+  - name: centos-7.0
+  - name: fedora-20
+  - name: fedora-21
+  - name: ubuntu-10.04
+  - name: ubuntu-12.04
+  - name: ubuntu-14.04
+
+suites:
+  - name: default
+    excludes: []
+    run_list:
+      - recipe[tor-full::default]
+    attributes: {}
