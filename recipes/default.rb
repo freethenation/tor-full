@@ -15,7 +15,7 @@ when 'debian'
     distribution node['lsb']['codename']
     components   ['main']
     keyserver    'keys.gnupg.net'
-    key          '886DDD89'
+    key          'A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89'
     deb_src      true
   end
 
@@ -47,7 +47,7 @@ when 'rhel', 'fedora'
     yum_repository 'epel' do
       description 'Extra Packages for Enterprise Linux'
       mirrorlist 'https://mirrors.fedoraproject.org/mirrorlist?repo=epel-6&arch=$basearch'
-      gpgkey 'http://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-6'
+      gpgkey 'https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-6'
       exclude 'tor'
       action :create
     end
