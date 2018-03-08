@@ -73,7 +73,7 @@ USC 2707</a> explicitly allows for civil remedies ($1000/account
 <i><b><u>plus</u></b></i>  legal fees)
 in the event of a seizure executed without good faith or probable cause (it
 should be clear at this point that traffic with an originating IP address of
-<%= node.tor.relay.Address %> should not constitute probable cause to seize the
+<%= node['tor']['relay']['Address'] %> should not constitute probable cause to seize the
 machine). Similar considerations exist for 1st amendment content on this
 machine.
 
@@ -103,7 +103,7 @@ response</a> for more information on this matter.
 <p>
 
 That being said, if you still have a complaint about the router,  you may
-email the <a href="mailto:<%= node.tor.relay.ContactInfo %>">maintainer</a>. If
+email the <a href="mailto:<%= node['tor']['relay']['ContactInfo'] %>">maintainer</a>. If
 complaints are related to a particular service that is being abused, I will
 consider removing that service from my exit policy, which would prevent my
 router from allowing that traffic to exit through it. I can only do this on an
@@ -122,4 +122,3 @@ to your site indefinitely simply because of a few bad apples.
 
 </body>
 </html>
-
