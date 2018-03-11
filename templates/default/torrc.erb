@@ -21,8 +21,8 @@
 ## as a relay, and not make any local application connections yourself.
 #SocksPort 9050 # Default: Bind to localhost:9050 for local connections.
 #SocksPort 192.168.0.1:9100 # Bind to this address:port too.
-<% if node.tor.SocksPorts.length > 0 %>
-  <% node.tor.SocksPorts.each do |socksPort| -%>
+<% if node['tor']['SocksPorts'].length > 0 %>
+  <% node['tor']['SocksPorts'].each do |socksPort| -%>
 SocksPort <%= socksPort %>
   <% end -%>
 <% else %>
@@ -52,7 +52,7 @@ SocksPort 0
 #Log notice syslog
 ## To send all messages to stderr:
 #Log debug stderr
-Log <%= node.tor.MinLogLevel %> <%= node.tor.LogDestination=="syslog" ? "" : "file " %><%= node.tor.LogDestination %>
+Log <%= node['tor']['MinLogLevel'] %> <%= node['tor']['LogDestination']=="syslog" ? "" : "file " %><%= node['tor']['LogDestination'] %>
 
 ## Uncomment this to start the process in the background... or use
 ## --runasdaemon 1 on the command line. This is ignored on Windows;
@@ -61,7 +61,7 @@ Log <%= node.tor.MinLogLevel %> <%= node.tor.LogDestination=="syslog" ? "" : "fi
 
 ## The directory for keeping all the keys/etc. By default, we store
 ## things in $HOME/.tor on Unix, and in Application Data\tor on Windows.
-DataDirectory <%= node.tor.DataDirectory %>
+DataDirectory <%= node['tor']['DataDirectory'] %>
 
 ## The port on which Tor will listen for local connections from Tor
 ## controller applications, as documented in control-spec.txt.
@@ -86,7 +86,7 @@ DataDirectory <%= node.tor.DataDirectory %>
 #HiddenServiceDir /var/lib/tor/other_hidden_service/
 #HiddenServicePort 80 127.0.0.1:80
 #HiddenServicePort 22 127.0.0.1:22
-<% node.tor.HiddenServices.each do |name, service| -%>
+<% node['tor']['HiddenServices'].each do |name, service| -%>
 
 HiddenServiceDir <%= service.HiddenServiceDir %>
 	<% service.HiddenServicePorts.each do |port| -%>
@@ -94,13 +94,13 @@ HiddenServicePort <%= port %>
 	<% end -%>
 <% end -%>
 
-<% if node.tor.relay.enabled %>
+<% if node['tor']['relay']['enabled'] %>
 ################ This section is just for relays #####################
 #
 ## See https://www.torproject.org/docs/tor-doc-relay for details.
 
 ## Required: what port to advertise for incoming Tor connections.
-ORPort <%= node.tor.relay.ORPort %>
+ORPort <%= node['tor']['relay']['ORPort'] %>
 ## If you want to listen on a port other than the one advertised in
 ## ORPort (e.g. to advertise 443 but bind to 9090), you can do it as
 ## follows.  You'll need to do ipchains or other port forwarding
@@ -110,29 +110,29 @@ ORPort <%= node.tor.relay.ORPort %>
 
 ## The IP address or full DNS name for incoming connections to your
 ## relay. Leave commented out and Tor will guess.
-<% unless node.tor.relay.Address.nil? %>
-Address <%= node.tor.relay.Address %>
+<% unless node['tor']['relay']['Address'].nil? %>
+Address <%= node['tor']['relay']['Address'] %>
 <% end %>
 
 ## If you have multiple network interfaces, you can specify one for
 ## outgoing traffic to use.
-<% unless node.tor.relay.OutboundBindAddress.nil? %>
-OutboundBindAddress <%= node.tor.relay.OutboundBindAddress %>
+<% unless node['tor']['relay']['OutboundBindAddress'].nil? %>
+OutboundBindAddress <%= node['tor']['relay']['OutboundBindAddress'] %>
 <% end %>
 
 ## A handle for your relay, so people don't have to refer to it by key.
-Nickname <%= node.tor.relay.Nickname %>
+Nickname <%= node['tor']['relay']['Nickname'] %>
 
 ## Define these to limit how much relayed traffic you will allow. Your
 ## own traffic is still unthrottled. Note that RelayBandwidthRate must
 ## be at least 20 KB.
 ## Note that units for these config options are bytes per second, not bits
 ## per second, and that prefixes are binary prefixes, i.e. 2^10, 2^20, etc.
-<% unless node.tor.relay.RelayBandwidthRate.nil? %>
-RelayBandwidthRate <%= node.tor.relay.RelayBandwidthRate %> KB
+<% unless node['tor']['relay']['RelayBandwidthRate'].nil? %>
+RelayBandwidthRate <%= node['tor']['relay']['RelayBandwidthRate'] %> KB
 <% end %>
-<% unless node.tor.relay.RelayBandwidthRate.nil? %>
-RelayBandwidthBurst <%= node.tor.relay.RelayBandwidthBurst %> KB
+<% unless node['tor']['relay']['RelayBandwidthRate'].nil? %>
+RelayBandwidthBurst <%= node['tor']['relay']['RelayBandwidthBurst'] %> KB
 <% end %>
 #RelayBandwidthRate 100 KB  # Throttle traffic to 100KB/s (800Kbps)
 #RelayBandwidthBurst 200 KB # But allow bursts up to 200KB/s (1600Kbps)
@@ -156,8 +156,8 @@ RelayBandwidthBurst <%= node.tor.relay.RelayBandwidthBurst %> KB
 #ContactInfo Random Person nobody AT example dot com
 ## You might also include your PGP or GPG fingerprint if you have one:
 #ContactInfo 0xFFFFFFFF Random Person nobody AT example dot com
-<% unless node.tor.relay.ContactInfo.nil? %>
-ContactInfo <%= node.tor.relay.ContactInfo %>
+<% unless node['tor']['relay']['ContactInfo'].nil? %>
+ContactInfo <%= node['tor']['relay']['ContactInfo'] %>
 <% end %>
 
 ## Uncomment this to mirror directory information for others. Please do
@@ -173,13 +173,13 @@ ContactInfo <%= node.tor.relay.ContactInfo %>
 ## can explain what Tor is if anybody wonders why your IP address is
 ## contacting them. See contrib/tor-exit-notice.html in Tor's source
 ## distribution for a sample.
-<% if node.tor.relay.DirPortFrontPage.is_a? String %>
-DirPortFrontPage <%= node.tor.relay.DirPortFrontPage %>
-<% elsif node.tor.relay.DirPortFrontPage %>
+<% if node['tor']['relay']['DirPortFrontPage'].is_a? String %>
+DirPortFrontPage <%= node['tor']['relay']['DirPortFrontPage'] %>
+<% elsif node['tor']['relay']['DirPortFrontPage'] %>
 DirPortFrontPage /etc/tor/tor-exit-notice.html
 <% end %>
-<% if node.tor.relay.Directory %>
-DirPort <%= node.tor.relay.DirPort %>
+<% if node['tor']['relay']['Directory'] %>
+DirPort <%= node['tor']['relay']['DirPort'] %>
 <% end %>
 
 ## Uncomment this if you run more than one Tor relay, and add the identity
@@ -190,8 +190,8 @@ DirPort <%= node.tor.relay.DirPort %>
 ## However, you should never include a bridge's fingerprint here, as it would
 ## break its concealability and potentionally reveal its IP/TCP address.
 #MyFamily $keyid,$keyid,...
-<% if node.tor.relay.MyFamily.length > 0 %>
-MyFamily <%= node.tor.relay.MyFamily.join(",") %>
+<% if node['tor']['relay']['MyFamily'].length > 0 %>
+MyFamily <%= node['tor']['relay']['MyFamily'].join(",") %>
 <% end %>
 
 ## A comma-separated list of exit policies. They're considered first
@@ -216,7 +216,7 @@ MyFamily <%= node.tor.relay.MyFamily.join(",") %>
 #ExitPolicy accept *:6660-6667,reject *:* # allow irc ports but no more
 #ExitPolicy accept *:119 # accept nntp as well as default exit policy
 #ExitPolicy reject *:* # no exits allowed
-<% node.tor.relay.ExitPolicy.each do |exitPolicy| -%>
+<% node['tor']['relay']['ExitPolicy'].each do |exitPolicy| -%>
 ExitPolicy <%= exitPolicy %>
 <% end -%>
 
@@ -226,10 +226,10 @@ ExitPolicy <%= exitPolicy %>
 ## won't be able to block all the bridges. Also, websites won't treat you
 ## differently because they won't know you're running Tor. If you can
 ## be a real relay, please do; but if not, be a bridge!
-BridgeRelay <%= node.tor.relay.BridgeRelay %>
+BridgeRelay <%= node['tor']['relay']['BridgeRelay'] %>
 ## By default, Tor will advertise your bridge to users through various
 ## mechanisms like https://bridges.torproject.org/. If you want to run
 ## a private bridge, for example because you'll give out your bridge
 ## address manually to your friends, uncomment this line:
-PublishServerDescriptor <%= node.tor.relay.PublishServerDescriptor %>
+PublishServerDescriptor <%= node['tor']['relay']['PublishServerDescriptor'] %>
 <% end %>

@@ -74,7 +74,7 @@ ruby_block "read-hostnames" do
   action :nothing
   block do
     # Set generated hostname for hidden services
-    node.tor.HiddenServices.each do |name, service|
+    node['tor']['HiddenServices'].each do |name, service|
       path = File.join(service.HiddenServiceDir, "/hostname")
       node.normal['tor']['HiddenServices'][name]['hostname'] = File.read(path).strip()
     end
@@ -87,7 +87,7 @@ template '/etc/tor/torrc' do
   notifies :restart, 'service[tor]', :immediately
   notifies :run, "ruby_block[read-hostnames]"
   # Set default HiddenServiceDir
-  node.tor.HiddenServices.each do |name, service|
+  node['tor']['HiddenServices'].each do |name, service|
     node.default['tor']['HiddenServices'][name]['HiddenServiceDir'] = File.join("/var/lib/tor/", name, "/")
   end
 end
